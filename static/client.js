@@ -1,8 +1,5 @@
-const SpeechRecognition =
-  globalThis.SpeechRecognition || globalThis.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-recognition.interimResults = true;
-recognition.continuous = true;
+import { recognition } from "./recognition.js";
+import { getViceList, speech } from "./speech.js";
 
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
@@ -11,6 +8,9 @@ const wsUri = `ws://localhost:8000/ws/${roomId}`;
 const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
 const websocket = new WebSocket(wsUri);
+
+const voiceList = await getViceList();
+console.log(voiceList);
 
 function writeToScreen(message) {
   output.insertAdjacentHTML("afterbegin", `<p>${message}</p>`);
@@ -26,15 +26,20 @@ function sendMessage(msg) {
   );
 }
 
-function speech(text) {
-  const uttr = new SpeechSynthesisUtterance(text);
-  uttr.lang = "ja-JP";
-  speechSynthesis.speak(uttr);
-}
-
 function handleClick() {
   recognition.start();
 }
+
+recognition.onresult = (event) => {
+  const transcript = event.results[event.results.length - 1][0].transcript;
+  if (event.results[event.results.length - 1].isFinal && transcript) {
+    sendMessage(transcript);
+  }
+};
+
+recognition.onspeechend = () => {
+  recognition.stop();
+};
 
 websocket.onopen = () => {
   writeToScreen("CONNECTED");
@@ -54,16 +59,4 @@ websocket.onmessage = (e) => {
 
 websocket.onerror = (e) => {
   writeToScreen(`ERROR: ${e.data}`);
-};
-
-recognition.onresult = (event) => {
-  const transcript = event.results[event.results.length - 1][0].transcript;
-
-  if (event.results[event.results.length - 1].isFinal && transcript) {
-    sendMessage(transcript);
-  }
-};
-
-recognition.onspeechend = () => {
-  recognition.stop();
 };
