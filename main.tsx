@@ -30,7 +30,7 @@ app.get("/room/:id", (c) => {
     name.length > 0 &&
     name.length <= MAX_NAME_LENGTH
   ) {
-    return c.html(<Room name={name} />);
+    return c.html(<Room roomId={id} name={name} />);
   } else {
     return c.notFound();
   }

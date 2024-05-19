@@ -22,8 +22,11 @@ const Layout: FC = (props) => {
   );
 };
 
-export const Room: FC<{ name: string }> = (props: { name: string }) => {
-  const { name } = props;
+export const Room: FC<{ roomId: string; name: string }> = (props: {
+  roomId: string;
+  name: string;
+}) => {
+  const { roomId, name } = props;
 
   const headerClass = css`
     background-color: gray;
@@ -34,6 +37,8 @@ export const Room: FC<{ name: string }> = (props: { name: string }) => {
   return (
     <Layout>
       <h1 class={headerClass}>sttts-call</h1>
+      <a href="/">トップへ</a>
+      <p>RoomID: {roomId}</p>
       <p>Name: {name}</p>
       <button id="speak-btn">speak</button>
       <div id="output"></div>
