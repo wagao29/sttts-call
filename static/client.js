@@ -4,7 +4,8 @@ const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.continuous = true;
 
-const wsUri = "ws://localhost:8000/ws";
+const roomId = location.pathname.split("/").pop();
+const wsUri = `ws://localhost:8000/ws/${roomId}`;
 const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
 const websocket = new WebSocket(wsUri);

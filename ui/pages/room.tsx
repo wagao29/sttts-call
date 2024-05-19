@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Style, css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
+import { Style, css, html } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
 
 const Layout: FC = (props) => {
@@ -15,14 +15,15 @@ const Layout: FC = (props) => {
             margin: 0;
           }
         `}</Style>
+        {html` <script type="module" src="/static/client.js"></script> `}
       </head>
       <body>{props.children}</body>
     </html>
   );
 };
 
-export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
-  const { roomId } = props;
+export const Room: FC<{ name: string }> = (props: { name: string }) => {
+  const { name } = props;
 
   const headerClass = css`
     background-color: gray;
@@ -33,18 +34,9 @@ export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
   return (
     <Layout>
       <h1 class={headerClass}>sttts-call</h1>
-      <div>
-        <p>RoomID: {roomId}</p>
-      </div>
-      <form action={`/room/${roomId}`} method="GET">
-        <div>
-          <label for="name">Name: </label>
-          <input type="text" name="name" id="name" value="" />
-        </div>
-        <div>
-          <button>Connect</button>
-        </div>
-      </form>
+      <p>Name: {name}</p>
+      <button id="speak-btn">speak</button>
+      <div id="output"></div>
     </Layout>
   );
 };

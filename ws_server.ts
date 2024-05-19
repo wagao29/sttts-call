@@ -1,3 +1,4 @@
+import { Context } from "https://deno.land/x/hono@v4.3.7/context.ts";
 import {
   WSContext,
   WSMessageReceive,
@@ -5,7 +6,10 @@ import {
 
 const sockets: Set<WSContext> = new Set();
 
-export function handleWS() {
+export function handleWS(c: Context) {
+  const id = c.req.param("id");
+  console.log(id);
+
   return {
     onOpen: (_event: Event, ws: WSContext) => {
       sockets.add(ws);
