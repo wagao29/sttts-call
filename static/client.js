@@ -4,7 +4,9 @@ const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.continuous = true;
 
-const roomId = location.pathname.split("/").pop();
+const url = new URL(location.href);
+const roomId = url.pathname.split("/").pop();
+const name = url.searchParams.get("name");
 const wsUri = `ws://localhost:8000/ws/${roomId}`;
 const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
@@ -14,9 +16,14 @@ function writeToScreen(message) {
   output.insertAdjacentHTML("afterbegin", `<p>${message}</p>`);
 }
 
-function sendMessage(message) {
-  writeToScreen(`SENT: ${message}`);
-  websocket.send(message);
+function sendMessage(msg) {
+  writeToScreen(`SENT: ${msg}`);
+  websocket.send(
+    JSON.stringify({
+      name,
+      msg,
+    })
+  );
 }
 
 function speech(text) {
@@ -40,8 +47,9 @@ websocket.onclose = () => {
 };
 
 websocket.onmessage = (e) => {
-  speech(e.data);
-  writeToScreen(`RECEIVED: ${e.data}`);
+  const data = JSON.parse(e.data);
+  speech(data.msg);
+  writeToScreen(`RECEIVED: [${data.name}] ${data.msg}`);
 };
 
 websocket.onerror = (e) => {
