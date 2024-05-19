@@ -31,8 +31,7 @@ export const Top: FC = () => {
   return (
     <Layout>
       <h1 class={headerClass}>sttts-call</h1>
-      <input type="text" id="msg-input" />
-      <button id="send-btn">send message</button>
+      <button id="speak-btn">speak</button>
       <div id="output"></div>
     </Layout>
   );

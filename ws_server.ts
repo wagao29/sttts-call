@@ -11,10 +11,12 @@ export function handleWS() {
       sockets.add(ws);
       console.log("CONNECTED");
     },
-    onMessage: (event: MessageEvent<WSMessageReceive>, _ws: WSContext) => {
+    onMessage: (event: MessageEvent<WSMessageReceive>, sender: WSContext) => {
       console.log(`Message from client: ${event.data}`);
       sockets.forEach((ws) => {
-        ws.send(`${event.data}`);
+        if (ws !== sender) {
+          ws.send(`${event.data}`);
+        }
       });
     },
     onClose: (_event: CloseEvent, ws: WSContext) => {
