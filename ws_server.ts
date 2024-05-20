@@ -6,33 +6,59 @@ import {
 
 const rooms = new Map<string, Set<WSContext>>();
 
+function sendBroadcast(
+  sockets: Set<WSContext>,
+  sender: WSContext,
+  data: string
+) {
+  for (const ws of sockets) {
+    if (ws !== sender) {
+      ws.send(data);
+    }
+  }
+}
+
 export function handleWS(c: Context) {
-  const roomId = c.req.param("id");
+  const { id } = c.req.param();
+  const { name } = c.req.query();
 
   return {
-    onOpen: (_event: Event, ws: WSContext) => {
-      console.log(`Connected (roomId: ${roomId})`);
-      if (!rooms.has(roomId)) {
-        rooms.set(roomId, new Set());
+    onOpen: (_event: Event, sender: WSContext) => {
+      console.log(`Connected (room_id: ${id})`);
+      if (!rooms.has(id)) {
+        rooms.set(id, new Set());
       }
-      const sockets = rooms.get(roomId);
-      sockets?.add(ws);
+      const sockets = rooms.get(id);
+      if (sockets) {
+        sockets.add(sender);
+        const data = JSON.stringify({
+          type: "join",
+          name: name,
+        });
+        sendBroadcast(sockets, sender, data);
+      }
     },
     onMessage: (event: MessageEvent<WSMessageReceive>, sender: WSContext) => {
       console.log(`Message from client: ${event.data}`);
-      const sockets = rooms.get(roomId);
-      sockets?.forEach((ws) => {
-        if (ws !== sender) {
-          ws.send(`${event.data}`);
-        }
-      });
+      const sockets = rooms.get(id);
+      if (sockets) {
+        sendBroadcast(sockets, sender, `${event.data}`);
+      }
     },
-    onClose: (_event: CloseEvent, ws: WSContext) => {
-      console.log(`Disconnected (roomId: ${roomId})`);
-      const sockets = rooms.get(roomId);
-      sockets?.delete(ws);
-      if (sockets?.size === 0) {
-        rooms.delete(roomId);
+    onClose: (_event: CloseEvent, sender: WSContext) => {
+      console.log(`Disconnected (room_id: ${id})`);
+      const sockets = rooms.get(id);
+      if (sockets) {
+        sockets.delete(sender);
+        if (sockets.size === 0) {
+          rooms.delete(id);
+        } else {
+          const data = JSON.stringify({
+            type: "leave",
+            name: name,
+          });
+          sendBroadcast(sockets, sender, data);
+        }
       }
     },
     onError: (error: Event) => {

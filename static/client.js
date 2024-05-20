@@ -4,7 +4,7 @@ import { getViceList, speech } from "./speech.js";
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
-const wsUri = `ws://localhost:8000/ws/${roomId}`;
+const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
 const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
 const websocket = new WebSocket(wsUri);
@@ -20,8 +20,9 @@ function sendMessage(msg) {
   writeToScreen(`SENT: ${msg}`);
   websocket.send(
     JSON.stringify({
-      name,
-      msg,
+      type: "message",
+      name: name,
+      content: msg,
     })
   );
 }
@@ -53,8 +54,28 @@ websocket.onclose = () => {
 
 websocket.onmessage = (e) => {
   const data = JSON.parse(e.data);
-  speech(data.msg);
-  writeToScreen(`RECEIVED: [${data.name}] ${data.msg}`);
+
+  // {
+  //   type: "message" | "join" | "leave";
+  //   name: string;
+  //   content?: string;
+  // }
+
+  switch (data.type) {
+    case "message": {
+      speech(data.content);
+      writeToScreen(`RECEIVED: [${data.name}] ${data.content}`);
+      break;
+    }
+    case "join": {
+      writeToScreen(`JOIN: ${data.name}`);
+      break;
+    }
+    case "leave": {
+      writeToScreen(`LEAVE: ${data.name}`);
+      break;
+    }
+  }
 };
 
 websocket.onerror = (e) => {
