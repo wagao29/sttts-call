@@ -1,38 +1,18 @@
 /** @jsx jsx */
-import { Style, css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
+import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
-
-const Layout: FC = (props) => {
-  return (
-    <html>
-      <head>
-        <title>sttts-call</title>
-        <Style>{css`
-          html {
-            font-family: Arial, Helvetica, sans-serif;
-          }
-          body {
-            margin: 0;
-          }
-        `}</Style>
-      </head>
-      <body>{props.children}</body>
-    </html>
-  );
-};
+import { BaseLayout } from "../layouts/BaseLayout.tsx";
 
 export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
   const { roomId } = props;
 
   const headerClass = css`
-    background-color: gray;
-    color: white;
     padding: 1rem;
   `;
 
   return (
-    <Layout>
-      <h1 class={headerClass}>sttts-call</h1>
+    <BaseLayout>
+      <h1 class={headerClass}>STTTS CALL</h1>
       <div>
         <p>RoomID: {roomId}</p>
       </div>
@@ -45,6 +25,6 @@ export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
           <button>Connect</button>
         </div>
       </form>
-    </Layout>
+    </BaseLayout>
   );
 };
