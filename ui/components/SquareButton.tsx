@@ -14,7 +14,7 @@ const btnClass = css`
 const labelClass = css`
   flex: 1;
   text-align: center;
-  font-size: 20px;
+  font-size: var(--font-size-small);
 `;
 
 export const SquareButton: FC<{
