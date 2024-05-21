@@ -6,7 +6,7 @@ const btnClass = css`
   padding: 10px;
   width: 200px;
   background-color: var(--color-green);
-  border-radius: 5px;
+  border-radius: var(--border-radius-small);
   display: flex;
   align-items: center;
 `;
