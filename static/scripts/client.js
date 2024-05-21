@@ -7,10 +7,15 @@ const name = url.searchParams.get("name");
 const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
 const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
+const leaveBtn = document.querySelector("#leave-btn");
 const websocket = new WebSocket(wsUri);
 
 const voiceList = await getViceList();
 console.log(voiceList);
+
+leaveBtn.onclick = () => {
+  window.location.href = "http://localhost:8000";
+};
 
 function writeToScreen(message) {
   output.insertAdjacentHTML("afterbegin", `<p>${message}</p>`);
