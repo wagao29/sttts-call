@@ -1,5 +1,5 @@
-import { recognition } from "./recognition.js";
-import { getViceList, speech } from "./speech.js";
+import { recognition } from "../scripts/recognition.js";
+import { getViceList, speech } from "../scripts/speech.js";
 
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();

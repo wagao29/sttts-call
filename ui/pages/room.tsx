@@ -10,7 +10,7 @@ export const Room: FC<{ roomId: string; name: string }> = (props: {
   const { roomId, name } = props;
 
   const headerClass = css`
-    padding: 1rem;
+    padding: 10px;
   `;
 
   return (
@@ -21,7 +21,7 @@ export const Room: FC<{ roomId: string; name: string }> = (props: {
       <p>Name: {name}</p>
       <button id="speak-btn">speak</button>
       <div id="output"></div>
-      {html` <script type="module" src="/static/client.js"></script> `}
+      {html` <script type="module" src="/static/scripts/client.js"></script> `}
     </BaseLayout>
   );
 };

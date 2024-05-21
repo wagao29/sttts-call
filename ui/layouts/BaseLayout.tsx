@@ -23,6 +23,15 @@ export const BaseLayout: FC = (props) => {
             background-color: var(--color-dark-gray);
             color: #fff;
           }
+          button {
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            padding: 0;
+            appearance: none;
+          }
         `}</Style>
       </head>
       <body>{props.children}</body>

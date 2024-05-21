@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { SquareButton } from "../components/SquareButton.tsx";
 import { BaseLayout } from "../layouts/BaseLayout.tsx";
 
 export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
   const { roomId } = props;
 
   const headerClass = css`
-    padding: 1rem;
+    padding: 10px;
   `;
 
   return (
@@ -22,7 +23,10 @@ export const Top: FC<{ roomId: string }> = (props: { roomId: string }) => {
           <input type="text" name="name" id="name" value="" />
         </div>
         <div>
-          <button>Connect</button>
+          <SquareButton
+            iconSrc="/static/images/icon-join.svg"
+            labelText="JOIN"
+          />
         </div>
       </form>
     </BaseLayout>
