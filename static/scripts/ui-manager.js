@@ -9,7 +9,7 @@ export function appendUser(name, isInit) {
   const chatBoxName = chatBox.querySelector(".chat-box-name");
   const chatBoxMsg = chatBox.querySelector(".chat-box-msg");
   chatBoxName.textContent = name;
-  chatBoxMsg.textContent = "";
+  chatBoxMsg.textContent = "...";
   chatBoxContainer.appendChild(chatBox);
 
   uiState[name] = {

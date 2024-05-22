@@ -36,6 +36,8 @@ function handleClick() {
 
 recognition.onresult = (event) => {
   const transcript = event.results[event.results.length - 1][0].transcript;
+  if (!transcript) return;
+
   updateMessage(name, transcript);
 
   if (event.results[event.results.length - 1].isFinal && transcript) {
