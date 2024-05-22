@@ -1,5 +1,6 @@
 import { recognition } from "../scripts/recognition.js";
 import { getViceList, speech } from "../scripts/speech.js";
+import { appendUser, removeUser, updateMessage } from "./ui-manager.js";
 
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
@@ -12,16 +13,14 @@ const websocket = new WebSocket(wsUri);
 const voiceList = await getViceList();
 console.log(voiceList);
 
+appendUser(name, true);
+
 leaveBtn.onclick = () => {
   window.location.href = "http://localhost:8000";
 };
 
-function writeToScreen(message) {
-  console.log(message);
-}
-
 function sendMessage(msg) {
-  writeToScreen(`SENT: ${msg}`);
+  console.log(`SENT: ${msg}`);
   websocket.send(
     JSON.stringify({
       type: "message",
@@ -37,6 +36,8 @@ function handleClick() {
 
 recognition.onresult = (event) => {
   const transcript = event.results[event.results.length - 1][0].transcript;
+  updateMessage(name, transcript);
+
   if (event.results[event.results.length - 1].isFinal && transcript) {
     sendMessage(transcript);
   }
@@ -47,17 +48,18 @@ recognition.onspeechend = () => {
 };
 
 websocket.onopen = () => {
-  writeToScreen("CONNECTED");
+  console.log("CONNECTED");
   speakBtn.addEventListener("click", handleClick);
 };
 
 websocket.onclose = () => {
-  writeToScreen("DISCONNECTED");
+  console.log("DISCONNECTED");
   speakBtn.removeEventListener("click", handleClick);
 };
 
 websocket.onmessage = (e) => {
   const data = JSON.parse(e.data);
+  const { type, name, content } = data;
 
   // {
   //   type: "message" | "join" | "leave";
@@ -65,23 +67,26 @@ websocket.onmessage = (e) => {
   //   content?: string;
   // }
 
-  switch (data.type) {
+  switch (type) {
     case "message": {
-      speech(data.content);
-      writeToScreen(`RECEIVED: [${data.name}] ${data.content}`);
+      console.log(`RECEIVED: [${name}] ${content}`);
+      updateMessage(name, content);
+      speech(content);
       break;
     }
     case "join": {
-      writeToScreen(`JOIN: ${data.name}`);
+      console.log(`JOIN: ${name}`);
+      appendUser(name, false);
       break;
     }
     case "leave": {
-      writeToScreen(`LEAVE: ${data.name}`);
+      console.log(`LEAVE: ${name}`);
+      removeUser(name);
       break;
     }
   }
 };
 
 websocket.onerror = (e) => {
-  writeToScreen(`ERROR: ${e.data}`);
+  console.error(`ERROR: ${e.data}`);
 };

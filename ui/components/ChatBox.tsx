@@ -13,24 +13,20 @@ const wrapperClass = css`
   border-radius: var(--border-radius-small);
   background-color: var(--color-gray);
   font-size: var(--font-size-small);
+
+  span {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: var(--font-size-small);
+  }
 `;
 
-const nameClass = css`
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-size: var(--font-size-small);
-`;
-
-export const ChatBox: FC<{
-  id: string;
-}> = (props: { id: string }) => {
-  const { id } = props;
-
+export const ChatBox: FC = () => {
   return (
-    <div class={wrapperClass} id={id}>
-      <p>こんにちは</p>
-      <span class={nameClass}>太郎</span>
+    <div class={wrapperClass} id="chat-box">
+      <p class="chat-box-msg"></p>
+      <span class="chat-box-name"></span>
     </div>
   );
 };

@@ -30,11 +30,8 @@ export const Room: FC<{ roomId: string; name: string }> = (props: {
   return (
     <BaseLayout>
       <div class={wrapperClass}>
-        <div class={containerClass}>
-          <ChatBox id="chat-box-1" />
-          <ChatBox id="chat-box-2" />
-          <ChatBox id="chat-box-3" />
-          <ChatBox id="chat-box-4" />
+        <div class={containerClass} id="chat-box-container">
+          <ChatBox />
         </div>
       </div>
       <Footer roomId={roomId} />
