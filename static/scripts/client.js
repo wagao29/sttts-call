@@ -5,7 +5,6 @@ const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
 const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
-const output = document.querySelector("#output");
 const speakBtn = document.querySelector("#speak-btn");
 const leaveBtn = document.querySelector("#leave-btn");
 const websocket = new WebSocket(wsUri);
@@ -18,7 +17,7 @@ leaveBtn.onclick = () => {
 };
 
 function writeToScreen(message) {
-  output.insertAdjacentHTML("afterbegin", `<p>${message}</p>`);
+  console.log(message);
 }
 
 function sendMessage(msg) {
