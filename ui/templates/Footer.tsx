@@ -37,7 +37,7 @@ export const Footer: FC<{ roomId: string }> = (props: { roomId: string }) => {
           <img src="/static/images/icon-leave.png" width={50} height={50} />
         </button>
       </div>
-      <CopyUrlButton url={`http://localhost:8000/?room_id=${roomId}`} />
+      <CopyUrlButton roomId={roomId} />
     </div>
   );
 };

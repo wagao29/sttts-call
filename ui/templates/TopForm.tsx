@@ -32,7 +32,7 @@ export const TopForm: FC<{ roomId: string }> = (props: { roomId: string }) => {
       <div class={contentClass}>
         <div>
           <span>Room ID : {roomId}</span>
-          <CopyUrlButton url={`http://localhost:8000/?room_id=${roomId}`} />
+          <CopyUrlButton roomId={roomId} />
         </div>
         <NameInput />
       </div>

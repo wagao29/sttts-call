@@ -10,7 +10,7 @@ import {
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
-const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
+const wsUri = `ws://${url.host}/ws/${roomId}?name=${name}`;
 const speakBtn = document.querySelector("#speak-btn");
 const speakBtnIcon = speakBtn.querySelector("img");
 const leaveBtn = document.querySelector("#leave-btn");
@@ -33,7 +33,7 @@ function mute() {
 appendUser(name, true);
 
 leaveBtn.onclick = () => {
-  window.location.href = "http://localhost:8000";
+  window.location.href = "/";
 };
 
 function sendMessage(msg) {

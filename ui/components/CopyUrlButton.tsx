@@ -26,9 +26,9 @@ const labelClass = css`
 `;
 
 export const CopyUrlButton: FC<{
-  url: string;
-}> = (props: { url: string }) => {
-  const { url } = props;
+  roomId: string;
+}> = (props: { roomId: string }) => {
+  const { roomId } = props;
 
   return (
     <Fragment>
@@ -39,7 +39,9 @@ export const CopyUrlButton: FC<{
       {html`
         <script>
           function copyUrl() {
-            navigator.clipboard.writeText("${url}");
+            navigator.clipboard.writeText(
+              \`\${location.protocol}://\${location.host}/?room_id=${roomId}\`
+            );
           }
         </script>
       `}
