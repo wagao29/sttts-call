@@ -12,8 +12,23 @@ const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
 const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
 const speakBtn = document.querySelector("#speak-btn");
+const speakBtnIcon = speakBtn.querySelector("img");
 const leaveBtn = document.querySelector("#leave-btn");
 const websocket = new WebSocket(wsUri);
+
+let isMute = true;
+
+function unmute() {
+  recognition.start();
+  speakBtnIcon.src = "/static/images/icon-mic.png";
+  isMute = false;
+}
+
+function mute() {
+  recognition.stop();
+  speakBtnIcon.src = "/static/images/icon-mute.png";
+  isMute = true;
+}
 
 appendUser(name, true);
 
@@ -32,8 +47,12 @@ function sendMessage(msg) {
   );
 }
 
-function handleClick() {
-  recognition.start();
+function handleSpeakBtnClick() {
+  if (isMute) {
+    unmute();
+  } else {
+    mute();
+  }
 }
 
 recognition.onresult = (event) => {
@@ -48,17 +67,22 @@ recognition.onresult = (event) => {
 };
 
 recognition.onspeechend = () => {
-  recognition.stop();
+  console.log("recognition.onspeechend");
+  mute();
+};
+recognition.onerror = () => {
+  console.log("recognition.onerror");
+  mute();
 };
 
 websocket.onopen = () => {
   console.log("CONNECTED");
-  speakBtn.addEventListener("click", handleClick);
+  speakBtn.addEventListener("click", handleSpeakBtnClick);
 };
 
 websocket.onclose = () => {
   console.log("DISCONNECTED");
-  speakBtn.removeEventListener("click", handleClick);
+  speakBtn.removeEventListener("click", handleSpeakBtnClick);
 };
 
 websocket.onmessage = (e) => {
