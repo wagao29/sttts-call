@@ -1,6 +1,11 @@
 import { recognition } from "../scripts/recognition.js";
-import { getViceList, speech } from "../scripts/speech.js";
-import { appendUser, removeUser, updateMessage } from "./ui-manager.js";
+import { speech } from "../scripts/speech.js";
+import {
+  appendUser,
+  getUserVoice,
+  removeUser,
+  updateMessage,
+} from "./room-manager.js";
 
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
@@ -9,9 +14,6 @@ const wsUri = `ws://localhost:8000/ws/${roomId}?name=${name}`;
 const speakBtn = document.querySelector("#speak-btn");
 const leaveBtn = document.querySelector("#leave-btn");
 const websocket = new WebSocket(wsUri);
-
-const voiceList = await getViceList();
-console.log(voiceList);
 
 appendUser(name, true);
 
@@ -73,7 +75,7 @@ websocket.onmessage = (e) => {
     case "message": {
       console.log(`RECEIVED: [${name}] ${content}`);
       updateMessage(name, content);
-      speech(content);
+      speech(content, getUserVoice(name));
       break;
     }
     case "join": {
