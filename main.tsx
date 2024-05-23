@@ -5,12 +5,13 @@ import {
   serveStatic,
 } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
 import { Hono } from "https://deno.land/x/hono@v4.3.7/mod.ts";
-import { MAX_NAME_LENGTH } from "./constants.ts";
+import { MAX_NAME_LENGTH, ROOM_ID_PATTERN, Rooms } from "./constants.ts";
 import { Room } from "./ui/pages/room.tsx";
 import { Top } from "./ui/pages/top.tsx";
+import { isDuplicateName, isFullRoom } from "./utils.ts";
 import { handleWS } from "./ws_server.ts";
 
-const roomIdPattern = /^[0-9a-f]{8}$/;
+export const rooms: Rooms = {};
 
 const app = new Hono();
 
@@ -25,16 +26,29 @@ app.get("/", (c) => {
 app.get("/room/:id", (c) => {
   const { id } = c.req.param();
   const { name } = c.req.query();
-  if (
-    roomIdPattern.test(id) &&
-    name &&
-    name.length > 0 &&
-    name.length <= MAX_NAME_LENGTH
-  ) {
-    return c.html(<Room roomId={id} name={name} />);
-  } else {
+
+  if (!ROOM_ID_PATTERN.test(id)) {
+    console.log("room id format error");
+    // TODO: Add room id format error page
     return c.notFound();
   }
+  if (!name || name.length > MAX_NAME_LENGTH) {
+    console.log("name length error");
+    // TODO: Add name length error page
+    return c.notFound();
+  }
+  if (rooms[id] && isFullRoom(rooms[id])) {
+    console.log("full room error");
+    // TODO: Add full room error page
+    return c.notFound();
+  }
+  if (rooms[id] && isDuplicateName(rooms[id], name)) {
+    console.log("name duplicate error");
+    // TODO: Add name duplicate error page
+    return c.notFound();
+  }
+
+  return c.html(<Room roomId={id} name={name} />);
 });
 
 app.get("/ws/:id", upgradeWebSocket(handleWS));
