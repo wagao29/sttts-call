@@ -10,7 +10,8 @@ import {
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
-const wsUri = `ws://${url.host}/ws/${roomId}?name=${name}`;
+const wsScheme = url.protocol === "https:" ? "wss" : "ws";
+const wsUri = `${wsScheme}://${url.host}/ws/${roomId}?name=${name}`;
 const speakBtn = document.querySelector("#speak-btn");
 const speakBtnIcon = speakBtn.querySelector("img");
 const leaveBtn = document.querySelector("#leave-btn");
