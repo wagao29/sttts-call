@@ -20,6 +20,8 @@ export const globalStyle = css`
   }
   body {
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
     background-color: var(--color-dark-gray);
     color: #fff;
     width: 100%;

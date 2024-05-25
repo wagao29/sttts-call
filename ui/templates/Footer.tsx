@@ -8,7 +8,6 @@ const footerClass = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
 
   span {
     font-size: var(--font-size-small);
@@ -19,7 +18,7 @@ const footerClass = css`
 
 const buttonWrapperClass = css`
   display: flex;
-  gap: 40px;
+  gap: 60px;
   align-items: center;
 `;
 
