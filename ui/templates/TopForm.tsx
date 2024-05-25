@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
-import { CopyUrlButton } from "../components/CopyURLButton.tsx";
+import { CopyUrlButton } from "../components/CopyUrlButton.tsx";
 import { NameInput } from "../components/NameInput.tsx";
 import { SquareButton } from "../components/SquareButton.tsx";
 
