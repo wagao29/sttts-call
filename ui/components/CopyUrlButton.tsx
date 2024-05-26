@@ -7,13 +7,14 @@ import {
 } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
 
 const btnClass = css`
-  width: 200px;
   display: flex;
   align-items: center;
+  gap: 10px;
   border-radius: var(--border-radius-small);
+  padding: 5px;
 
   &:active {
-    background-color: var(--color-dark-gray);
+    background-color: var(--color-gray);
   }
 `;
 
