@@ -1,5 +1,5 @@
-import { recognition } from "../scripts/recognition.js";
 import { speech } from "../scripts/speech.js";
+import { initSpeechRecognition } from "./recognition.js";
 import {
   appendUser,
   getUserVoice,
@@ -10,12 +10,15 @@ import {
 const url = new URL(location.href);
 const roomId = url.pathname.split("/").pop();
 const name = url.searchParams.get("name");
+const lang = url.searchParams.get("lang");
 const wsScheme = url.protocol === "https:" ? "wss" : "ws";
-const wsUri = `${wsScheme}://${url.host}/ws/${roomId}?name=${name}`;
+const wsUri = `${wsScheme}://${url.host}/ws/${roomId}?lang=${lang}&name=${name}`;
 const speakBtn = document.querySelector("#speak-btn");
 const speakBtnIcon = speakBtn.querySelector("img");
 const leaveBtn = document.querySelector("#leave-btn");
 const websocket = new WebSocket(wsUri);
+
+const recognition = initSpeechRecognition(lang);
 
 let isMute = true;
 
@@ -100,7 +103,7 @@ websocket.onmessage = (e) => {
     case "message": {
       console.log(`RECEIVED: [${name}] ${content}`);
       updateMessage(name, content);
-      speech(content, getUserVoice(name));
+      speech(content, getUserVoice(name), lang);
       break;
     }
     case "join": {

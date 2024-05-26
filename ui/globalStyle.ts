@@ -9,8 +9,8 @@ export const globalStyle = css`
     --color-blue: #1a6ddd;
 
     --font-size-small: 20px;
-    --font-size-medium: 30px;
-    --font-size-large: 40px;
+    --font-size-medium: 25px;
+    --font-size-large: 30px;
 
     --border-radius-small: 5px;
     --border-radius-medium: 10px;

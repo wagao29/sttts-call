@@ -21,11 +21,12 @@ const containerClass = css`
   height: 80%;
 `;
 
-export const Room: FC<{ roomId: string; name: string }> = (props: {
+export const Room: FC<{
   roomId: string;
   name: string;
-}) => {
-  const { roomId, name } = props;
+  lang: string;
+}> = (props: { roomId: string; name: string; lang: string }) => {
+  const { roomId, name, lang } = props;
 
   return (
     <BaseLayout>
@@ -34,7 +35,7 @@ export const Room: FC<{ roomId: string; name: string }> = (props: {
           <ChatBox />
         </div>
       </div>
-      <Footer roomId={roomId} />
+      <Footer roomId={roomId} langCode={lang} />
       {html` <script type="module" src="/static/scripts/client.js"></script> `}
     </BaseLayout>
   );

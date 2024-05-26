@@ -18,14 +18,16 @@ const app = new Hono();
 app.get("/static/*", serveStatic({ root: "./" }));
 
 app.get("/", (c) => {
-  const { room_id } = c.req.query();
+  const { room_id, lang } = c.req.query();
   const roomId = room_id || crypto.randomUUID().substring(0, 8);
-  return c.html(<Top roomId={roomId} />);
+  return c.html(<Top roomId={roomId} lang={lang} />);
 });
 
 app.get("/room/:id", (c) => {
   const { id } = c.req.param();
-  const { name } = c.req.query();
+  const { name, lang } = c.req.query();
+
+  // TODO: Add lang validation
 
   if (!ROOM_ID_PATTERN.test(id)) {
     console.log("room id format error");
@@ -48,7 +50,7 @@ app.get("/room/:id", (c) => {
     return c.notFound();
   }
 
-  return c.html(<Room roomId={id} name={name} />);
+  return c.html(<Room roomId={id} name={name} lang={lang} />);
 });
 
 app.get("/ws/:id", upgradeWebSocket(handleWS));

@@ -1,7 +1,12 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
-import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
-import { CopyUrlButton } from "../components/CopyUrlButton.tsx";
+import {
+  FC,
+  Fragment,
+  jsx,
+} from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { FormText } from "../components/FormText.tsx";
+import { LanguageSelect } from "../components/LanguageSelect.tsx";
 import { NameInput } from "../components/NameInput.tsx";
 import { SquareButton } from "../components/SquareButton.tsx";
 
@@ -10,30 +15,36 @@ const formClass = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 50px;
-  gap: 50px;
-  background-color: var(--color-gray);
-  border-radius: var(--border-radius-small);
+  gap: 60px;
 `;
 
 const contentClass = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 500px;
   font-size: var(--font-size-medium);
-  gap: 20px;
+  gap: 40px;
 `;
 
-export const TopForm: FC<{ roomId: string }> = (props: { roomId: string }) => {
-  const { roomId } = props;
+export const TopForm: FC<{ roomId: string; lang?: string }> = (props: {
+  roomId: string;
+  lang?: string;
+}) => {
+  const { roomId, lang } = props;
 
   return (
     <form action={`/room/${roomId}`} method="GET" class={formClass}>
       <div class={contentClass}>
-        <div>
-          <span>Room ID : {roomId}</span>
-          <CopyUrlButton roomId={roomId} />
-        </div>
+        <FormText label="Room ID" value={roomId} />
+        {lang ? (
+          <Fragment>
+            <FormText label="Language" value={lang} />
+            <input type="hidden" name="lang" value={lang} />
+          </Fragment>
+        ) : (
+          <LanguageSelect defaultLangCode={lang} />
+        )}
         <NameInput />
       </div>
       <SquareButton iconSrc="/static/images/icon-join.svg" labelText="JOIN" />

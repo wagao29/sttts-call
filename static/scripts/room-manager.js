@@ -2,7 +2,9 @@ import { getViceList } from "./speech.js";
 
 const chatBoxContainer = document.querySelector("#chat-box-container");
 const baseChatBox = document.querySelector("#chat-box");
-const voiceList = await getViceList();
+const url = new URL(location.href);
+const lang = url.searchParams.get("lang");
+const voiceList = await getViceList(lang);
 
 const roomState = {};
 

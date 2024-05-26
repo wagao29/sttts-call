@@ -11,7 +11,6 @@ const btnClass = css`
   display: flex;
   align-items: center;
   border-radius: var(--border-radius-small);
-  padding: 3px 0;
 
   &:active {
     background-color: var(--color-dark-gray);
@@ -27,8 +26,9 @@ const labelClass = css`
 
 export const CopyUrlButton: FC<{
   roomId: string;
-}> = (props: { roomId: string }) => {
-  const { roomId } = props;
+  langCode: string;
+}> = (props: { roomId: string; langCode: string }) => {
+  const { roomId, langCode } = props;
 
   return (
     <Fragment>
@@ -40,7 +40,7 @@ export const CopyUrlButton: FC<{
         <script>
           function copyUrl() {
             navigator.clipboard.writeText(
-              \`\${location.protocol}://\${location.host}/?room_id=${roomId}\`
+              \`\${location.protocol}://\${location.host}/?room_id=${roomId}&lang=${langCode}\`
             );
           }
         </script>

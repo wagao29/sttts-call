@@ -11,7 +11,6 @@ const footerClass = css`
 
   span {
     font-size: var(--font-size-small);
-    width: 200px;
     text-align: center;
   }
 `;
@@ -22,12 +21,17 @@ const buttonWrapperClass = css`
   align-items: center;
 `;
 
-export const Footer: FC<{ roomId: string }> = (props: { roomId: string }) => {
-  const { roomId } = props;
+export const Footer: FC<{ roomId: string; langCode: string }> = (props: {
+  roomId: string;
+  langCode: string;
+}) => {
+  const { roomId, langCode } = props;
 
   return (
     <div class={footerClass}>
-      <span>Room ID : {roomId}</span>
+      <span>
+        {roomId} ({langCode})
+      </span>
       <div class={buttonWrapperClass}>
         <button id="speak-btn">
           <img src="/static/images/icon-mute.png" width={50} height={50} />
@@ -36,7 +40,7 @@ export const Footer: FC<{ roomId: string }> = (props: { roomId: string }) => {
           <img src="/static/images/icon-leave.png" width={50} height={50} />
         </button>
       </div>
-      <CopyUrlButton roomId={roomId} />
+      <CopyUrlButton roomId={roomId} langCode={langCode} />
     </div>
   );
 };
