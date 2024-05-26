@@ -27,21 +27,23 @@ function sendRoomUserNames(room: Room, socket: WSContext) {
 
 export function handleWS(c: Context) {
   const { id } = c.req.param();
-  const { name } = c.req.query();
+  const { name, lang } = c.req.query();
+
+  const roomKey = `${id}-${lang}`;
 
   return {
     onOpen: (_event: Event, socket: WSContext) => {
-      if (rooms[id]) {
+      if (rooms[roomKey]) {
         // Notify the names of users already in the room
-        sendRoomUserNames(rooms[id], socket);
+        sendRoomUserNames(rooms[roomKey], socket);
       } else {
         // Create a new room
-        rooms[id] = {};
+        rooms[roomKey] = {};
       }
-      const room = rooms[id];
+      const room = rooms[roomKey];
 
       if (isFullRoom(room) || isDuplicateName(room, name)) {
-        console.log(`Reject connections (room_id: ${id}, name: ${name})`);
+        console.log(`Reject connections (roomKey: ${roomKey}, name: ${name})`);
         return;
       }
 
@@ -51,18 +53,18 @@ export function handleWS(c: Context) {
         name: name,
       });
       sendBroadcast(room, name, data);
-      console.log(`Connected (room_id: ${id}, name: ${name})`);
+      console.log(`Connected (roomKey: ${roomKey}, name: ${name})`);
     },
     onMessage: (event: MessageEvent<WSMessageReceive>, _socket: WSContext) => {
       console.log(
-        `Receive Message ${event.data} (room_id: ${id}, name: ${name}) `
+        `Receive Message ${event.data} (roomKey: ${roomKey}, name: ${name}) `
       );
-      if (rooms[id]) {
-        sendBroadcast(rooms[id], name, `${event.data}`);
+      if (rooms[roomKey]) {
+        sendBroadcast(rooms[roomKey], name, `${event.data}`);
       }
     },
     onClose: (_event: CloseEvent, _socket: WSContext) => {
-      const room = rooms[id];
+      const room = rooms[roomKey];
       if (!room) return;
 
       // Delete user from room
@@ -70,7 +72,7 @@ export function handleWS(c: Context) {
 
       if (Object.keys(room).length === 0) {
         // Delete room when there are no users in the room
-        delete rooms[id];
+        delete rooms[roomKey];
       } else {
         const data = JSON.stringify({
           type: "leave",
@@ -79,7 +81,7 @@ export function handleWS(c: Context) {
         sendBroadcast(room, name, data);
       }
 
-      console.log(`Disconnected (room_id: ${id}, name: ${name})`);
+      console.log(`Disconnected (roomKey: ${roomKey}, name: ${name})`);
     },
     onError: (error: Event) => {
       console.error("Error:", error);

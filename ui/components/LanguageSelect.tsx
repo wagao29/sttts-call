@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LANGUAGE_LIST } from "../../constants.ts";
 
 const wrapperClass = css`
   display: flex;
@@ -23,8 +24,9 @@ export const LanguageSelect: FC = () => {
       <label for="lang">Language</label>
       <div>
         <select name="lang" id="lang">
-          <option value="en-US">English (en-US)</option>
-          <option value="ja-JP">Japanese (ja-JP)</option>
+          {Object.entries(LANGUAGE_LIST).map(([langValue, langText]) => (
+            <option value={langValue}>{langText}</option>
+          ))}
         </select>
       </div>
     </div>
