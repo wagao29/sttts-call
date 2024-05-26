@@ -20,6 +20,8 @@ const websocket = new WebSocket(wsUri);
 
 const recognition = initSpeechRecognition(lang);
 
+appendUser(name, true);
+
 let isMute = true;
 
 function unmute() {
@@ -34,12 +36,6 @@ function mute() {
   isMute = true;
 }
 
-appendUser(name, true);
-
-leaveBtn.onclick = () => {
-  window.location.href = "/";
-};
-
 function sendMessage(msg) {
   console.log(`SENT: ${msg}`);
   websocket.send(
@@ -51,13 +47,17 @@ function sendMessage(msg) {
   );
 }
 
-function handleSpeakBtnClick() {
+leaveBtn.onclick = () => {
+  window.location.href = "/";
+};
+
+speakBtn.onclick = () => {
   if (isMute) {
     unmute();
   } else {
     mute();
   }
-}
+};
 
 recognition.onresult = (event) => {
   const transcript = event.results[event.results.length - 1][0].transcript;
@@ -80,13 +80,17 @@ recognition.onerror = () => {
 };
 
 websocket.onopen = () => {
-  console.log("CONNECTED");
-  speakBtn.addEventListener("click", handleSpeakBtnClick);
+  console.log("websocket.onopen");
 };
 
 websocket.onclose = () => {
-  console.log("DISCONNECTED");
-  speakBtn.removeEventListener("click", handleSpeakBtnClick);
+  globalThis.alert(`WebSocket Connection Closed`);
+  window.location.href = "/";
+};
+
+websocket.onerror = () => {
+  globalThis.alert(`WebSocket Connection Error`);
+  window.location.href = "/";
 };
 
 websocket.onmessage = (e) => {
@@ -117,8 +121,4 @@ websocket.onmessage = (e) => {
       break;
     }
   }
-};
-
-websocket.onerror = (e) => {
-  console.error(`ERROR: ${e.data}`);
 };
