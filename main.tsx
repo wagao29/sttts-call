@@ -19,7 +19,20 @@ app.get("/static/*", serveStatic({ root: "./" }));
 
 app.get("/", (c) => {
   const { room_id, lang } = c.req.query();
+
+  if (room_id && !ROOM_ID_PATTERN.test(room_id)) {
+    console.log("room id format error");
+    // TODO: Add room id format error page
+    return c.notFound();
+  }
+  if (lang && !isValidLang(lang)) {
+    console.log("lang format error");
+    // TODO: Add lang format error page
+    return c.notFound();
+  }
+
   const roomId = room_id || crypto.randomUUID().substring(0, 8);
+
   return c.html(<Top roomId={roomId} lang={lang} />);
 });
 
@@ -34,6 +47,7 @@ app.get("/room/:id", (c) => {
     return c.notFound();
   }
   if (!isValidLang(lang)) {
+    console.log("lang format error");
     // TODO: Add lang format error page
     return c.notFound();
   }
