@@ -11,6 +11,7 @@ import {
   ROOM_ID_PATTERN,
   Rooms,
 } from "./constants.ts";
+import { Error } from "./ui/pages/error.tsx";
 import { Room } from "./ui/pages/room.tsx";
 import { Top } from "./ui/pages/top.tsx";
 import { isDuplicateName, isFullRoom, isValidLang } from "./utils.ts";
@@ -26,14 +27,10 @@ app.get("/", (c) => {
   const { room_id, lang } = c.req.query();
 
   if (room_id && !ROOM_ID_PATTERN.test(room_id)) {
-    console.log("room id format error");
-    // TODO: Add room id format error page
-    return c.notFound();
+    return c.html(<Error message="Room ID has invalid format" />);
   }
   if (lang && !isValidLang(lang)) {
-    console.log("lang format error");
-    // TODO: Add lang format error page
-    return c.notFound();
+    return c.html(<Error message="Lang Code has invalid format" />);
   }
 
   const roomId = room_id || crypto.randomUUID().substring(0, 8);
@@ -56,34 +53,34 @@ app.get("/room/:id", (c) => {
   const roomKey = `${id}-${lang}`;
 
   if (!ROOM_ID_PATTERN.test(id)) {
-    console.log("room id format error");
-    // TODO: Add room id format error page
-    return c.notFound();
+    return c.html(<Error message="Room ID has invalid format" />);
+  }
+  if (!lang) {
+    return c.html(<Error message="No lang code" />);
+  }
+  if (!name) {
+    return c.html(<Error message="No name" />);
   }
   if (!isValidLang(lang)) {
-    console.log("lang format error");
-    // TODO: Add lang format error page
-    return c.notFound();
+    return c.html(<Error message="Lang code has invalid format" />);
   }
-  if (!name || name.length > MAX_NAME_LENGTH) {
-    console.log("name length error");
-    // TODO: Add name length error page
-    return c.notFound();
+  if (name.length > MAX_NAME_LENGTH) {
+    return c.html(<Error message="Name too long" />);
   }
   if (rooms[roomKey] && isFullRoom(rooms[roomKey])) {
-    console.log("full room error");
-    // TODO: Add full room error page
-    return c.notFound();
+    return c.html(<Error message="The room is full" />);
   }
   if (rooms[roomKey] && isDuplicateName(rooms[roomKey], name)) {
-    console.log("name duplicate error");
-    // TODO: Add name duplicate error page
-    return c.notFound();
+    return c.html(<Error message="The name is already in use" />);
   }
 
   return c.html(<Room roomId={id} lang={lang as LangCode} />);
 });
 
 app.get("/ws/:id", upgradeWebSocket(handleWS));
+
+app.notFound((c) => {
+  return c.html(<Error message="404 Not Found" />);
+});
 
 Deno.serve({ port: 8000 }, app.fetch);
