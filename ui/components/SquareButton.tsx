@@ -17,10 +17,12 @@ const labelClass = css`
   font-size: var(--font-size-small);
 `;
 
-export const SquareButton: FC<{
+type Props = {
   iconSrc: string;
   labelText: string;
-}> = (props: { iconSrc: string; labelText: string }) => {
+};
+
+export const SquareButton: FC<Props> = (props: Props) => {
   const { iconSrc, labelText } = props;
 
   return (

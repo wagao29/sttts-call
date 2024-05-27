@@ -19,6 +19,8 @@ export const LANGUAGE_LIST = {
   "ru-RU": "Russian (ru-RU)",
 };
 
+export type LangCode = keyof typeof LANGUAGE_LIST;
+
 // {roomId}-{langCode}
 export type RoomKey = string;
 

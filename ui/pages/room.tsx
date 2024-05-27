@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, html } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LangCode } from "../../constants.ts";
 import { ChatBox } from "../components/ChatBox.tsx";
 import { BaseLayout } from "../layouts/BaseLayout.tsx";
 import { Footer } from "../templates/Footer.tsx";
@@ -21,12 +22,13 @@ const containerClass = css`
   height: 80%;
 `;
 
-export const Room: FC<{
+type Props = {
   roomId: string;
-  name: string;
-  lang: string;
-}> = (props: { roomId: string; name: string; lang: string }) => {
-  const { roomId, name, lang } = props;
+  lang: LangCode;
+};
+
+export const Room: FC<Props> = (props: Props) => {
+  const { roomId, lang } = props;
 
   return (
     <BaseLayout>
@@ -35,7 +37,7 @@ export const Room: FC<{
           <ChatBox />
         </div>
       </div>
-      <Footer roomId={roomId} langCode={lang} />
+      <Footer roomId={roomId} lang={lang} />
       {html` <script type="module" src="/static/scripts/client.js"></script> `}
     </BaseLayout>
   );

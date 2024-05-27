@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LangCode } from "../../constants.ts";
 import { BaseLayout } from "../layouts/BaseLayout.tsx";
 import { TopForm } from "../templates/TopForm.tsx";
 
@@ -18,11 +19,13 @@ const formWrapperClass = css`
   justify-content: center;
 `;
 
-export const Top: FC<{
+type Props = {
   roomId: string;
-  defaultLang: string;
-  lang?: string;
-}> = (props: { roomId: string; defaultLang: string; lang?: string }) => {
+  defaultLang: LangCode;
+  lang?: LangCode;
+};
+
+export const Top: FC<Props> = (props: Props) => {
   const { roomId, defaultLang, lang } = props;
 
   return (

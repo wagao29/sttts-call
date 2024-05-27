@@ -5,6 +5,7 @@ import {
   Fragment,
   jsx,
 } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LangCode } from "../../constants.ts";
 import { FormText } from "../components/FormText.tsx";
 import { LanguageSelect } from "../components/LanguageSelect.tsx";
 import { NameInput } from "../components/NameInput.tsx";
@@ -27,11 +28,13 @@ const contentClass = css`
   gap: 40px;
 `;
 
-export const TopForm: FC<{
+type Props = {
   roomId: string;
-  defaultLang: string;
-  lang?: string;
-}> = (props: { roomId: string; defaultLang: string; lang?: string }) => {
+  defaultLang: LangCode;
+  lang?: LangCode;
+};
+
+export const TopForm: FC<Props> = (props: Props) => {
   const { roomId, defaultLang, lang } = props;
 
   return (

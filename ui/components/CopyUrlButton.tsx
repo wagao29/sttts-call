@@ -5,6 +5,7 @@ import {
   Fragment,
   jsx,
 } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LangCode } from "../../constants.ts";
 
 const btnClass = css`
   display: flex;
@@ -25,11 +26,13 @@ const labelClass = css`
   color: var(--color-blue);
 `;
 
-export const CopyUrlButton: FC<{
+type Props = {
   roomId: string;
-  langCode: string;
-}> = (props: { roomId: string; langCode: string }) => {
-  const { roomId, langCode } = props;
+  lang: LangCode;
+};
+
+export const CopyUrlButton: FC<Props> = (props: Props) => {
+  const { roomId, lang } = props;
 
   return (
     <Fragment>
@@ -41,7 +44,7 @@ export const CopyUrlButton: FC<{
         <script>
           function copyUrl() {
             navigator.clipboard.writeText(
-              \`\${location.protocol}://\${location.host}/?room_id=${roomId}&lang=${langCode}\`
+              \`\${location.protocol}://\${location.host}/?room_id=${roomId}&lang=${lang}\`
             );
           }
         </script>

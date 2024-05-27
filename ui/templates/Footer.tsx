@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { LangCode } from "../../constants.ts";
 import { CopyUrlButton } from "../components/CopyUrlButton.tsx";
 
 const footerClass = css`
@@ -21,16 +22,18 @@ const buttonWrapperClass = css`
   align-items: center;
 `;
 
-export const Footer: FC<{ roomId: string; langCode: string }> = (props: {
+type Props = {
   roomId: string;
-  langCode: string;
-}) => {
-  const { roomId, langCode } = props;
+  lang: LangCode;
+};
+
+export const Footer: FC<Props> = (props: Props) => {
+  const { roomId, lang } = props;
 
   return (
     <div class={footerClass}>
       <span>
-        {roomId} ({langCode})
+        {roomId} ({lang})
       </span>
       <div class={buttonWrapperClass}>
         <button id="speak-btn">
@@ -40,7 +43,7 @@ export const Footer: FC<{ roomId: string; langCode: string }> = (props: {
           <img src="/static/images/icon-leave.png" width={50} height={50} />
         </button>
       </div>
-      <CopyUrlButton roomId={roomId} langCode={langCode} />
+      <CopyUrlButton roomId={roomId} lang={lang} />
     </div>
   );
 };

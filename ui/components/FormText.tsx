@@ -15,10 +15,12 @@ const valueWrapperClass = css`
   text-align: center;
 `;
 
-export const FormText: FC<{ label: string; value: string }> = (props: {
+type Props = {
   label: string;
   value: string;
-}) => {
+};
+
+export const FormText: FC<Props> = (props: Props) => {
   const { label, value } = props;
 
   return (

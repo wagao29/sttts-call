@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
-import { LANGUAGE_LIST } from "../../constants.ts";
+import { LANGUAGE_LIST, LangCode } from "../../constants.ts";
 
 const wrapperClass = css`
   display: flex;
@@ -18,10 +18,13 @@ const wrapperClass = css`
   }
 `;
 
-export const LanguageSelect: FC<{
-  defaultLang: string;
-}> = (props: { defaultLang: string }) => {
+type Props = {
+  defaultLang: LangCode;
+};
+
+export const LanguageSelect: FC<Props> = (props: Props) => {
   const { defaultLang } = props;
+
   return (
     <div class={wrapperClass}>
       <label for="lang">Language</label>
