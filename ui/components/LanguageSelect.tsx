@@ -18,14 +18,19 @@ const wrapperClass = css`
   }
 `;
 
-export const LanguageSelect: FC = () => {
+export const LanguageSelect: FC<{
+  defaultLang: string;
+}> = (props: { defaultLang: string }) => {
+  const { defaultLang } = props;
   return (
     <div class={wrapperClass}>
       <label for="lang">Language</label>
       <div>
         <select name="lang" id="lang">
           {Object.entries(LANGUAGE_LIST).map(([langValue, langText]) => (
-            <option value={langValue}>{langText}</option>
+            <option value={langValue} selected={defaultLang === langValue}>
+              {langText}
+            </option>
           ))}
         </select>
       </div>

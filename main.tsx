@@ -33,7 +33,12 @@ app.get("/", (c) => {
 
   const roomId = room_id || crypto.randomUUID().substring(0, 8);
 
-  return c.html(<Top roomId={roomId} lang={lang} />);
+  // Set the default value of language selection to the first of Accept-Language
+  const firstAcceptLang = c.req.header("Accept-Language")?.split(",")[0];
+  const defaultLang =
+    firstAcceptLang && isValidLang(firstAcceptLang) ? firstAcceptLang : "en-US";
+
+  return c.html(<Top roomId={roomId} defaultLang={defaultLang} lang={lang} />);
 });
 
 app.get("/room/:id", (c) => {

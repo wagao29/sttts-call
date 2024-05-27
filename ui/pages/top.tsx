@@ -18,17 +18,18 @@ const formWrapperClass = css`
   justify-content: center;
 `;
 
-export const Top: FC<{ roomId: string; lang?: string }> = (props: {
+export const Top: FC<{
   roomId: string;
+  defaultLang: string;
   lang?: string;
-}) => {
-  const { roomId, lang } = props;
+}> = (props: { roomId: string; defaultLang: string; lang?: string }) => {
+  const { roomId, defaultLang, lang } = props;
 
   return (
     <BaseLayout>
       <p class={descriptionClass}>Call by SpeechToText and TextToSpeech</p>
       <div class={formWrapperClass}>
-        <TopForm roomId={roomId} lang={lang} />
+        <TopForm roomId={roomId} defaultLang={defaultLang} lang={lang} />
       </div>
     </BaseLayout>
   );

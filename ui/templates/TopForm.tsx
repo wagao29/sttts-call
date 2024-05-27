@@ -27,11 +27,12 @@ const contentClass = css`
   gap: 40px;
 `;
 
-export const TopForm: FC<{ roomId: string; lang?: string }> = (props: {
+export const TopForm: FC<{
   roomId: string;
+  defaultLang: string;
   lang?: string;
-}) => {
-  const { roomId, lang } = props;
+}> = (props: { roomId: string; defaultLang: string; lang?: string }) => {
+  const { roomId, defaultLang, lang } = props;
 
   return (
     <form action={`/room/${roomId}`} method="GET" class={formClass}>
@@ -43,7 +44,7 @@ export const TopForm: FC<{ roomId: string; lang?: string }> = (props: {
             <input type="hidden" name="lang" value={lang} />
           </Fragment>
         ) : (
-          <LanguageSelect defaultLangCode={lang} />
+          <LanguageSelect defaultLang={defaultLang} />
         )}
         <NameInput />
       </div>
