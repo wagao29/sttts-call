@@ -26,6 +26,7 @@ app.get("/", (c) => {
 app.get("/room/:id", (c) => {
   const { id } = c.req.param();
   const { name, lang } = c.req.query();
+  const roomKey = `${id}-${lang}`;
 
   if (!ROOM_ID_PATTERN.test(id)) {
     console.log("room id format error");
@@ -41,12 +42,12 @@ app.get("/room/:id", (c) => {
     // TODO: Add name length error page
     return c.notFound();
   }
-  if (rooms[id] && isFullRoom(rooms[id])) {
+  if (rooms[roomKey] && isFullRoom(rooms[roomKey])) {
     console.log("full room error");
     // TODO: Add full room error page
     return c.notFound();
   }
-  if (rooms[id] && isDuplicateName(rooms[id], name)) {
+  if (rooms[roomKey] && isDuplicateName(rooms[roomKey], name)) {
     console.log("name duplicate error");
     // TODO: Add name duplicate error page
     return c.notFound();
