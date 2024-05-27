@@ -7,15 +7,22 @@ const headerClass = css`
   justify-content: space-between;
   align-items: center;
 
+  a {
+    text-decoration: none;
+  }
+
   h1 {
     font-size: var(--font-size-large);
+    color: #fff;
   }
 `;
 
 export const Header: FC = () => {
   return (
     <div class={headerClass}>
-      <h1>STTTS CALL</h1>
+      <a href="/">
+        <h1>STTTS CALL</h1>
+      </a>
       <a
         href="https://github.com/wagao29/sttts-call"
         target="_blank"
