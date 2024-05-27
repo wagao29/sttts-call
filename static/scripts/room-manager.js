@@ -8,13 +8,15 @@ const voiceList = await getViceList(lang);
 
 const roomState = {};
 
+// Set a new random voice from unassigned voices
 function setVoice(name) {
-  const unassignedVoice = voiceList.find((voice) => {
+  const unassignedVoices = voiceList.filter((voice) => {
     return !Object.values(roomState).some((user) => user.voice === voice);
   });
+  const randomIndex = Math.floor(Math.random() * unassignedVoices.length);
   roomState[name] = {
     ...roomState[name],
-    voice: unassignedVoice || voiceList[0],
+    voice: unassignedVoices[randomIndex] || voiceList[0],
   };
 }
 
