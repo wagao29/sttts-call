@@ -2,10 +2,11 @@ import { Style } from "@hono/hono/css";
 import { FC } from "@hono/hono/jsx";
 import { globalStyle } from "../globalStyle.ts";
 import { Header } from "../templates/Header.tsx";
+import { HtmlLayout } from "./HtmlLayout.tsx";
 
 export const BaseLayout: FC = (props) => {
   return (
-    <html lang="en">
+    <HtmlLayout>
       <head>
         <title>STTTS CALL</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,6 +22,6 @@ export const BaseLayout: FC = (props) => {
         <Header />
         {props.children}
       </body>
-    </html>
+    </HtmlLayout>
   );
 };

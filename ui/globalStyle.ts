@@ -50,4 +50,15 @@ export const globalStyle = css`
     padding: 0;
     appearance: none;
   }
+
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 `;
