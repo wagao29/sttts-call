@@ -5,15 +5,21 @@ import { LangCode } from "../../constants.ts";
 import { BaseLayout } from "../layouts/BaseLayout.tsx";
 import { TopForm } from "../templates/TopForm.tsx";
 
+const wrapperClass = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const descriptionClass = css`
   text-align: center;
-  margin-top: 80px;
   font-size: var(--font-size-large);
 `;
 
 const formWrapperClass = css`
   width: 100%;
-  margin-top: 80px;
+  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,9 +47,11 @@ export const Top: FC<Props> = (props: Props) => {
 
   return (
     <BaseLayout>
-      <p class={descriptionClass}>Call by SpeechToText and TextToSpeech</p>
-      <div class={formWrapperClass}>
-        <TopForm roomId={roomId} defaultLang={defaultLang} lang={lang} />
+      <div class={wrapperClass}>
+        <p class={descriptionClass}>Call by SpeechToText and TextToSpeech</p>
+        <div class={formWrapperClass}>
+          <TopForm roomId={roomId} defaultLang={defaultLang} lang={lang} />
+        </div>
       </div>
       <p class={copyrightClass}>
         {"© 2024 "}
