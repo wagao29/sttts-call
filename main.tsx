@@ -6,6 +6,7 @@ import {
 } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
 import { Hono } from "https://deno.land/x/hono@v4.3.7/mod.ts";
 import {
+  LANGUAGE_LIST,
   LangCode,
   MAX_NAME_LENGTH,
   ROOM_ID_PATTERN,
@@ -36,11 +37,11 @@ app.get("/", (c) => {
   const roomId = room_id || crypto.randomUUID().substring(0, 8);
 
   // Set the default value of language selection to the first of Accept-Language
-  const firstAcceptLang = c.req.header("Accept-Language");
-  const defaultLang =
-    firstAcceptLang && isValidLang(firstAcceptLang)
-      ? (firstAcceptLang as LangCode)
-      : "en-US";
+  const firstAcceptLang =
+    c.req.header("Accept-Language")?.split(",")[0] || "en-US";
+  const defaultLang = Object.keys(LANGUAGE_LIST).find((langCode) => {
+    return langCode.startsWith(firstAcceptLang);
+  }) as LangCode;
 
   return c.html(
     <Top roomId={roomId} defaultLang={defaultLang} lang={lang as LangCode} />
