@@ -14,6 +14,7 @@ const wrapperClass = css`
 const descriptionClass = css`
   text-align: center;
   font-size: var(--font-size-large);
+  line-height: 1.5;
 `;
 
 const formWrapperClass = css`
@@ -47,7 +48,11 @@ export const Top: FC<Props> = (props: Props) => {
   return (
     <BaseLayout>
       <div class={wrapperClass}>
-        <p class={descriptionClass}>Call by SpeechToText and TextToSpeech</p>
+        <p class={descriptionClass}>
+          Calling app built by connecting
+          <br />
+          Speech-to-Text and Text-to-Speech
+        </p>
         <div class={formWrapperClass}>
           <TopForm roomId={roomId} defaultLang={defaultLang} lang={lang} />
         </div>

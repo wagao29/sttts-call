@@ -8,10 +8,11 @@ export const BaseLayout: FC = (props) => {
     <html lang="en">
       <head>
         <title>STTTS CALL</title>
-        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
         <meta
           name="description"
-          content="Call by SpeechToText and TextToSpeech"
+          content="Calling app built by connecting Speech-to-Text and Text-to-Speech."
         />
         <link rel="icon" href="/static/images/favicon.png" />
         <Style>{globalStyle}</Style>
