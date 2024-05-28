@@ -3,8 +3,18 @@ import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
 import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
 
 const wrapperClass = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const chatBoxClass = css`
+  width: 80%;
+  height: 80%;
+  max-width: 600px;
+  max-height: 300px;
+
   position: relative;
-  height: 250px;
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -25,8 +35,10 @@ const wrapperClass = css`
 export const ChatBox: FC = () => {
   return (
     <div class={wrapperClass} id="chat-box">
-      <p class="chat-box-msg"></p>
-      <span class="chat-box-name"></span>
+      <div class={chatBoxClass}>
+        <p class="chat-box-msg"></p>
+        <span class="chat-box-name"></span>
+      </div>
     </div>
   );
 };

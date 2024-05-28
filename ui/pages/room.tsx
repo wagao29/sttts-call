@@ -11,13 +11,14 @@ const wrapperClass = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const containerClass = css`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 40px;
   width: 80%;
   height: 80%;
 `;
