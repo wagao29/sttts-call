@@ -17,9 +17,13 @@ const footerClass = css`
 `;
 
 const buttonWrapperClass = css`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   display: flex;
-  gap: 60px;
-  align-items: center;
+  gap: 100px;
 `;
 
 type Props = {
