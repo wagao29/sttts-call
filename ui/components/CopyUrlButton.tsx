@@ -1,10 +1,6 @@
-/** @jsx jsx */
-import { css, html } from "https://deno.land/x/hono@v4.3.7/helper.ts";
-import {
-  FC,
-  Fragment,
-  jsx,
-} from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { css } from "@hono/hono/css";
+import { html } from "@hono/hono/html";
+import { FC, Fragment } from "@hono/hono/jsx";
 import { LangCode } from "../../constants.ts";
 
 const btnClass = css`

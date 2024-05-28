@@ -1,8 +1,5 @@
-import { Context } from "https://deno.land/x/hono@v4.3.7/context.ts";
-import {
-  WSContext,
-  WSMessageReceive,
-} from "https://deno.land/x/hono@v4.3.7/helper/websocket/index.ts";
+import { Context } from "@hono/hono";
+import { WSContext, WSMessageReceive } from "@hono/hono/ws";
 import { Room, UserName } from "./constants.ts";
 import { rooms } from "./main.tsx";
 import { isDuplicateName, isFullRoom } from "./utils.ts";

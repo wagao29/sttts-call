@@ -1,4 +1,4 @@
-import { WSContext } from "https://deno.land/x/hono@v4.3.7/helper/websocket/index.ts";
+import { WSContext } from "@hono/hono/ws";
 
 export const MAX_NAME_LENGTH = 10;
 

@@ -1,4 +1,4 @@
-import { css } from "https://deno.land/x/hono@v4.3.7/helper.ts";
+import { css } from "@hono/hono/css";
 
 export const globalStyle = css`
   :root {

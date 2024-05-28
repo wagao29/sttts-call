@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { Style } from "https://deno.land/x/hono@v4.3.7/helper.ts";
-import { FC, jsx } from "https://deno.land/x/hono@v4.3.7/middleware.ts";
+import { Style } from "@hono/hono/css";
+import { FC } from "@hono/hono/jsx";
 import { globalStyle } from "../globalStyle.ts";
 import { Header } from "../templates/Header.tsx";
 

@@ -1,10 +1,5 @@
-/** @jsx jsx */
-import { upgradeWebSocket } from "https://deno.land/x/hono@v4.3.7/helper.ts";
-import {
-  jsx,
-  serveStatic,
-} from "https://deno.land/x/hono@v4.3.7/middleware.ts";
-import { Hono } from "https://deno.land/x/hono@v4.3.7/mod.ts";
+import { Hono } from "@hono/hono";
+import { serveStatic, upgradeWebSocket } from "@hono/hono/deno";
 import {
   LANGUAGE_LIST,
   LangCode,
