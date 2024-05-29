@@ -19,8 +19,8 @@ const containerClass = css`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
 `;
 
 type Props = {

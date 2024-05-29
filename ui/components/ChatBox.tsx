@@ -14,7 +14,7 @@ const chatBoxClass = css`
   max-height: 300px;
 
   position: relative;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;

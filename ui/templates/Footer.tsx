@@ -17,7 +17,7 @@ const footerClass = css`
 
 const buttonWrapperClass = css`
   position: absolute;
-  bottom: 0;
+  bottom: -15px;
   left: 50%;
   transform: translate(-50%, -50%);
 

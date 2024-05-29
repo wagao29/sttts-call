@@ -19,7 +19,7 @@ const descriptionClass = css`
 
 const formWrapperClass = css`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
