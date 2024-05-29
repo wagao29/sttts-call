@@ -65,7 +65,7 @@ recognition.onresult = (event) => {
 
   updateMessage(name, transcript);
 
-  if (event.results[event.results.length - 1].isFinal && transcript) {
+  if (event.results[event.results.length - 1].isFinal) {
     sendMessage(transcript);
   }
 };
