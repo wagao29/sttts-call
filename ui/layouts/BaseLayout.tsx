@@ -16,6 +16,10 @@ export const BaseLayout: FC = (props) => {
           content="Calling app built by connecting Speech-to-Text and Text-to-Speech."
         />
         <link rel="icon" href="/static/images/favicon.png" />
+        <link
+          rel="apple-touch-icon"
+          href="/static/images/apple-touch-icon.png"
+        />
         <Style>{globalStyle}</Style>
       </head>
       <body>
